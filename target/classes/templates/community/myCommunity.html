@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>我的社团</title>
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.css}" rel="stylesheet">
+    <script th:src="@{/webjars/jquery/3.3.1-2/jquery.min.js}"></script>
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+        .img-size{
+            max-width: 50px;
+            max-height: 50px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("ul.list-group li").mouseover('li',function(){
+                $(this).addClass("active");
+            });
+            $("ul.list-group li").mouseout(function(){
+                $(this).removeClass("active");
+            });
+        });
+
+
+        $(document).ready(function(){
+            $("ul.list-group li").click(function() {
+                var obj = $(this).find("a");
+                window.location.href=$(obj[0]).attr("href");
+            });
+        });
+
+    </script>
+
+    <script type="text/javascript">
+        function create() {
+            document.getElementById('create').style.display='block';
+        }
+        function close() {
+            document.getElementById('create').style.display='none';
+        }
+    </script>
+
+</head>
+
+<body>
+<div th:replace="style::#topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="style::#sidebar"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h1 class="display-4">箴言</h1>
+                    <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row clearfix">
+                    <div class="col-md-4 column">
+                        <h4>我管理的社团</h4>
+                        <div class="pre-scrollable" style="height:50%;">
+                        <ul class="list-group">
+                            <!--/*@thymesVar id="joinedCommunity" type=""*/-->
+                            <li class="list-group-item " th:if="${not #strings.isEmpty(comList.numberLevel) && comList.numberLevel<3}" th:each="comList : ${joinedCommunity}">
+                                <a href="#" th:href="@{/community/communityInfo(id=${comList.communityId})}" style="color: black !important;">[[${comList.communityName}]]  ([[${comList.levelName}]])</a>
+                            </li>
+
+                        </ul>
+                        </div>
+                        <button th:if="${session.user.flag}==1" class="btn btn-info" onclick="create()">创建社团</button>
+                    </div>
+                    <div class="col-md-4 column">
+                        <h4>我加入的社团</h4>
+                        <div class="pre-scrollable" style="height:50%">
+                        <ul class="list-group">
+                            <!--/*@thymesVar id="joinedCommunity" type=""*/-->
+                            <li class="list-group-item " th:if="${not #strings.isEmpty(comList.numberLevel) && comList.numberLevel==3}" th:each="comList : ${joinedCommunity}">
+                                <a href="#" th:href="@{/community/communityInfo(id=${comList.communityId})}" style="color: black !important;">[[${comList.communityName}]]  ([[${comList.levelName}]])</a>
+                            </li>
+                        </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4 column">
+                        <h4>待审核</h4>
+                        <div class="pre-scrollable" style="height:50%">
+                            <ul class="list-group">
+                                <!--/*@thymesVar id="joinedCommunity" type=""*/-->
+                                <li class="list-group-item " th:if="${comList.auditStatus==0}" th:each="comList : ${joinedCommunity}">
+                                    <a href="#" th:href="@{/community/communityInfo(id=${comList.communityId})}" style="color: black !important;">[[${comList.communityName}]]  (待审核)</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!--创建社团-->
+        <div class="modal" tabindex="-1" role="dialog" id="create" style="display: none;margin-top: 10%">
+            <div class="modal-dialog" role="document">
+                <form th:action="@{/community/CreateCommunity}" method="post">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">创建社团</h5>
+                            <button onclick="close()" type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="input-group mb-3">
+                                <div style="margin-right: 20px"><label for="Cname">社团名</label><input class="form-control" placeholder="社团名" id="Cname" value="" name="Cname"></div>
+                                <div><label for="Uname">社长</label><input class="form-control" id="Uname" name="Uname" value="" placeholder="用户名"></div>
+                                <div><label for="schoolName"> 学校名</label><input class="form-control" id="schoolName" name="schoolName" value="" placeholder="学校名"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button onclick="close()" type="button" class="btn btn-secondary">关闭</button>
+                            <button type="submit" class="btn btn-primary">保存</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+</body>
+
+</html>

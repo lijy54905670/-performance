@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>活动</title>
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.css}" rel="stylesheet">
+    <script th:src="@{/webjars/jquery/3.3.1-2/jquery.min.js}"></script>
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+        .img-size{
+            max-width: 50px;
+            max-height: 50px;
+        }
+
+        #createActivity{
+            border-radius:5px;
+            display: none;
+            position: absolute;
+            top: 25%;
+            left: 25%;
+            width: 40%;
+            height: 60%;
+            padding-top: 0px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 20px;
+            background-color: white;
+            color: white;
+            z-index:2;
+            overflow: auto;
+            box-shadow: darkgrey;
+        }
+
+        #bg{
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index:1;
+            -moz-opacity: 0.7;
+            opacity:.70;
+            filter: alpha(opacity=70);
+        }
+
+        hr {
+            -moz-border-bottom-colors: none;
+            -moz-border-image: none;
+            -moz-border-left-colors: none;
+            -moz-border-right-colors: none;
+            -moz-border-top-colors: none;
+            border-color: gainsboro;
+            border-style: solid none;
+            border-width: 1px 0;
+            margin: 18px 0;
+        }
+    </style>
+
+    <script type="text/javascript">
+    function create() {
+        document.getElementById('createActivity').style.display='block'
+        document.getElementById('bg').style.display='block'
+    }
+    function closeCreate() {
+        document.getElementById('createActivity').style.display='none'
+        document.getElementById('bg').style.display='none'
+    }
+</script>
+
+</head>
+
+<body>
+<div th:replace="style::#topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="style::#sidebar"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div th:replace="style::#communitybar"></div>
+            <div class="container">
+                <div class="row clearfix">
+                    <div class="col-md-8 column">
+                        <div class="div-margin">
+                            <h3>活动ING</h3>
+                        </div>
+                        <!--/*@thymesVar id="activities" type=""*/-->
+                        <div th:each="activity : ${activities}" class="card">
+                            <div class="card-header" role="tab">
+                                <h5 class="mb-0">
+                                    <a href="#collapseOne" target="_blank" th:href="@{/activitys/activityInfo(id=${activity.id})}" data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne">
+                                        [[${activity.title}]]
+                                    </a>
+                                </h5>
+                            </div>
+                            <div class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="card-block">
+                                    [[${activity.description}]]
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--分页-->
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a th:if="${session.level<2 && session.isMember==true}" class="page-link" href="javascript:void(0)"  onclick="create()" th:text="创建活动"></a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                    </div>
+
+
+
+
+                    <div class="col-md-4 column" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="div-margin">
+                            <h3>历史活动</h3>
+                        </div>
+                        <!--/*@thymesVar id="historyActivity" type=""*/-->
+                        <div th:each="activity : ${historyActivity}" class="card">
+                            <div class="card-header" role="tab" id="headingOne">
+                                <h5 class="mb-0">
+                                    <a href="#collapseOne" target="_blank" th:href="@{/activitys/activityInfo(id=${activity.id})}" data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne">
+                                        [[${activity.title}]]
+                                    </a>
+                                </h5>
+                            </div>
+
+                            <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="card-block">
+                                    [[${activity.description}]]
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+
+        <!--创活动界面-->
+        <div id="bg"></div>
+        <div id="createActivity">
+            <div class="modal-header">
+                <h5 style="color: black !important">创建活动</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeCreate()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/activitys/createActivity}" method="post">
+                    <div class="form-group">
+                        <label for="title" style="color: black !important" >活动名</label>
+                        <input type="text" class="form-control" id="title" name="title" placeholder="标题">
+                    </div>
+                    <div class="form-group">
+                        <label for="posttype" style="color: black !important" >类型</label>
+                        <select class="form-control" id="posttype" name="flag">
+                            <option th:value="1">联谊活动</option>
+                            <option th:value="2">内部活动</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate" style="color: black !important" >报名结束时间</label>
+                        <input type="text" class="form-control" id="endDate" name="applyendDate" placeholder="报名结束时间">
+                    </div>
+                    <div class="form-group">
+                        <label for="activityTime" style="color: black !important" >活动时间</label>
+                        <input type="text" class="form-control" id="activityTime" name="activityDate" placeholder="活动时间">
+                    </div>
+                    <div class="form-group">
+                        <label for="activityAddress" style="color: black !important" >活动地点</label>
+                        <input type="text" class="form-control" id="activityAddress" name="location" placeholder="活动地点">
+                    </div>
+                    <div class="form-group">
+                        <label for="text" style="color: black !important" >内容</label>
+                        <textarea class="form-control" id="text" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-primary" onclick="closeCreate()">关闭</button>
+                        <button type="submit" class="btn btn-outline-secondary">提交</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+</body>
+
+</html>

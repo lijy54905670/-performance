@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>communityHall</title>
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.css}" rel="stylesheet">
+    <script th:src="@{/webjars/jquery/3.3.1-2/jquery.min.js}"></script>
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+        .div-margin{
+            margin-top: 50px;
+        }
+    </style>
+
+    <script type="text/javascript" >
+        var pageNum =[[${pageNum}]];
+        $(document).ready(function(){
+            $("li#" + pageNum + "").addClass("active");
+        });
+
+    </script>
+
+    <script type="text/javascript">
+        $(function() {
+            //将省id传入后台
+            $("#box").change(function() {
+                var pid = $("#box").val();
+                $.ajax({
+                    type : "POST",
+                    url : "/showCityListByPid",
+                    data : {
+                        pid : pid
+                    },
+                    dataType : "JSON",
+                    success : function(date) {
+                        var str = "<option>请选择</option>";
+                        $("#box1").html("");
+                        for ( var i = 0; i < date.length; i++) {
+
+
+                            //显示到下拉框，并将city作为查询学校的参数
+                            str += "<option value='"+date[i].city+"'>" + date[i].city + "</option>";
+
+                        }
+                        $("#box1").append(str);
+
+                        $("#box").change(function() {
+                            $("#box1").val("请选择");
+                            $("#box2").val("请选择");
+                        })
+
+                    }
+                });
+
+            });
+            //将城市名称传入后台
+            $("#box1").change(function() {
+                var cid = $("#box1").val();
+                $.ajax({
+                    type : "POST",
+                    url : "/showSchoolListByCname",
+                    data : {
+                        'cid' : cid
+                    },
+                    dataType : "JSON",
+                    success : function(date) {
+                        var str = "<option>请选择</option>";
+                        $("#box2").html("");
+                        for ( var i = 0; i < date.length; i++) {
+                            str += "<option value='"+date[i].name+"'>" + date[i].name + "</option>";
+
+                        }
+                        $("#box2").append(str);
+                        $("#box1").change(function() {
+                            $("#box2").val("请选择");
+                        })
+
+                    }
+
+                });
+
+            });
+
+
+            //将学校名称传入后台
+            $("#box2").change(function() {
+                var sname = $("#box2").val();
+                $.ajax({
+                    type : "POST",
+                    url : "/showCommunityListBySname",
+                    data : {
+                        'sname' : sname
+                    },
+                    dataType : "JSON",
+                    success : function(date) {
+                        var str = "<option>请选择</option>";
+                    }
+
+                });
+
+            });
+
+        });
+    </script>
+
+</head>
+
+<body>
+<div th:replace="style::#topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="style::#sidebar"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="container"  id="container">
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
+                        <div class="input-group mb-3 div-margin">
+                                <div style="margin-right:10px">
+                                    <select class="form-control" id="box">
+                                        <option>请选择</option>
+                                        <!--/*@thymesVar id="proList" type=""*/-->
+                                        <option th:each="pro :${proList}" th:value="${pro.provinceID}" th:text="${pro.province}"></option>
+                                    </select>
+                                </div>
+                                <div style="margin-right:10px">
+                                    <!--  城市下拉列表 -->
+                                    <select class="form-control" id="box1">
+                                        <option>请选择</option>
+                                    </select>
+                                </div>
+                                <div style="margin-right:10px">
+                                    <select class="form-control" id="box2">
+                                        <option>请选择</option>
+                                    </select>
+                                </div>
+                            <form class="form-inline" th:action="@{/community/showCommunityBySname/1}" method="post">
+                                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">搜索</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row clearfix">
+                    <!--/*@thymesVar id="communityUserLists" type=""*/-->
+                    <div th:each="community : ${communityUserLists}" class="col-md-3 column">
+                        <div class="div-community">
+                            <h6 class="card-title ">[[${community.communityName}]]</h6>
+                            <p class="card-text">学校：[[${community.schoolName}]]<br> 人数：[[${community.personNum}]]</p>
+                            <a href="#" th:href="@{/community/communityInfo(id=${community.id})}" class="card-link">查看</a>
+                        </div>
+                    </div>
+                </div>
+                <nav aria-label="Page navigation example">
+
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" th:if="${pageNum}>1" th:href="@{'/community/communityHall/'+${pageNum -1}}">上一页</a>
+                        </li>
+                        <!--/*@thymesVar id="maxPage" type=""*/-->
+                        <li class="page-item" th:if="${maxPage}<=10" th:each="i:${#numbers.sequence(1,maxPage)}" th:id="${i}">
+                            <a class="page-link"  th:href="@{'/community/communityHall/'+${i}}" th:text="${i}"></a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" th:if="${pageNum+1}<=${maxPage}" th:href="@{'/community/communityHall/'+${pageNum+1}}">下一页</a>
+                        </li>
+                        <li class="page-item">
+                            <!--/*@thymesVar id="maxPage" type=""*/-->
+                            <a class="page-link" href="#" th:href="@{'/community/communityHall/'+${maxPage}}">尾页</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </main>
+    </div>
+</div>
+</body>
+
+</html>

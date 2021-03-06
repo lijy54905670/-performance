@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>展示</title>
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.css}" rel="stylesheet">
+    <script th:src="@{/webjars/jquery/3.3.1-2/jquery.min.js}"></script>
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+        .img-size{
+            max-width: 50px;
+            max-height: 50px;
+        }
+
+        #createPost{
+            border-radius:5px;
+            display: none;
+            position: absolute;
+            top: 25%;
+            left: 25%;
+            width: 40%;
+            height: 60%;
+            padding-top: 0px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 20px;
+            background-color: white;
+            color: white;
+            z-index:2;
+            overflow: auto;
+            box-shadow: darkgrey;
+        }
+
+        #bg{
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index:1;
+            -moz-opacity: 0.7;
+            opacity:.70;
+            filter: alpha(opacity=70);
+        }
+
+        hr {
+            -moz-border-bottom-colors: none;
+            -moz-border-image: none;
+            -moz-border-left-colors: none;
+            -moz-border-right-colors: none;
+            -moz-border-top-colors: none;
+            border-color: gainsboro;
+            border-style: solid none;
+            border-width: 1px 0;
+            margin: 18px 0;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function create() {
+            document.getElementById('createPost').style.display='block'
+            document.getElementById('bg').style.display='block'
+        }
+        function closeCreate() {
+            document.getElementById('createPost').style.display='none'
+            document.getElementById('bg').style.display='none'
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("button").click(function(){
+                var id=this.value;
+                var str=$("#"+id).text();
+                //alert(str);
+                if(str=="加精") {
+                    $("#"+id).text("取消加精");
+                    $.ajax({
+                        type: "POST",
+                        url: "/post/addRecommend",
+                        data: {
+                            id: id,
+                            flag:1
+                        },
+                    });
+                }
+                if(str=="取消加精") {
+                    $("#"+id).text("加精");
+                    $.ajax({
+                        type: "POST",
+                        url: "/post/addRecommend",
+                        data: {
+                            id: id,
+                            flag:0
+                        },
+                    });
+                }
+            });
+        });
+    </script>
+
+
+</head>
+
+<body>
+<div th:replace="style::#topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="style::#sidebar"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div th:replace="style::#communitybar"></div>
+            <div class="container">
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
+                        <!--05-13-->
+                        <!--/*@thymesVar id="postLists" type=""*/-->
+                        <div th:each="postList : ${postLists}" class="card-header" style="height:50px">
+                                <div style="width: 80%; float: left">
+                                <h5 class="mb-0">
+                                    <a href="#" target="_blank" th:href="@{/post/postInfo(id=${postList.id})}" >
+                                        [[${postList.title}]]
+                                    </a>
+                                </h5></div>
+                                <div>
+                                        <button th:if="${session.level<3}" th:id="${postList.id}" th:value="${postList.id}" class='btn btn-outline-secondary btn-sm' th:text="${postList.isRecommend}==0?'加精':'取消加精'"></button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" th:if="${session.isMember}==true" ref="javascript:void(0)"  onclick="create()" th:text="创贴"></a>
+                                </li>
+                            </ul>
+                        </nav>
+
+
+            </div>
+        </main>
+
+        <!--创贴界面-->
+        <div id="bg"></div>
+        <div id="createPost">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <div style="margin-top: 30px"><hr/></div>
+            <div>
+                <form th:action="@{/post/addPost}" method="post">
+                    <div class="form-group">
+                        <label style="color: black !important" >标题</label>
+                        <input type="text" class="form-control" name="title" placeholder="标题">
+                    </div>
+                    <div class="form-group">
+                        <label style="color: black !important" >类型</label>
+                        <select class="form-control" name="postType">
+                            <option th:value="0">内部贴</option>
+                            <option th:value="1">共享贴</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label style="color: black !important" >内容</label>
+                        <textarea class="form-control" name="text" rows="3"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-primary" onclick="closeCreate()">关闭</button>
+                        <button type="submit" class="btn btn-outline-secondary">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

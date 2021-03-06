@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>活动详情</title>
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.css}" rel="stylesheet">
+    <script th:src="@{/webjars/jquery/3.3.1-2/jquery.min.js}"></script>
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+<div th:replace="style::#topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="style::#sidebar"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="container">
+                <div class="row clearfix">
+                    <div class="col-md-8 column">
+                        <div class="card" >
+                            <img src="..." th:src="@{/asserts/img/一不小心爱上你.jpg}"  class="card-img-top" style="height: 200px" alt="活动宣传图">
+                            <div class="card-body">
+                                <h5 class="card-title">[[${oneActivityInfo.title}]]</h5>
+                                <p class="card-text">内容：[[${oneActivityInfo.description}]]
+                                </p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+
+                                <li class="list-group-item">地点：[[${oneActivityInfo.location}]]</li>
+                                <li class="list-group-item">活动时间：[[${#dates.format(oneActivityInfo.activityDate, 'yyyy-MM-dd HH:mm')}]]</li>
+                                <li class="list-group-item">报名时间：[[${#dates.format(oneActivityInfo.applystartDate, 'yyyy-MM-dd HH:mm')}]]~~[[${#dates.format(oneActivityInfo.applyendDate, 'yyyy-MM-dd HH:mm')}]]</li>
+                            </ul>
+                            <div class="card-body">
+                                <!--/*@thymesVar id="oneActivityInfo" type=""*/-->
+                                <a class="btn btn-info" th:if="${session.isMember==true && session.isApply==false && oneActivityInfo.isHistory==0}" th:href="@{/activitys/apply(id=${oneActivityInfo.id})}">报名</a>
+                                <button type="button" class="btn btn-secondary btn-sm" disabled th:if="${session.isApply==true && oneActivityInfo.isHistory==0}">已报名</button>
+                                <a class="btn btn-info" th:if="${session.isMember==true && session.isApply==true && session.level<2 && oneActivityInfo.isHistory==0}" th:href="@{/activitys/stopActivity(id=${oneActivityInfo.id})}">结束活动</a>
+                                <button type="button" class="btn btn-secondary btn-sm" disabled th:if="${oneActivityInfo.isHistory}==1">已结束</button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 column">
+                        <h3>已报名成员</h3>
+                        <div class="pre-scrollable">
+                            <ul class="list-group">
+                                <!--/*@thymesVar id="activityUser" type=""*/-->
+                                <li class="list-group-item " th:each="activityUser:${activityUser}">[[${activityUser.userName}]]</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+</body>
+
+</html>

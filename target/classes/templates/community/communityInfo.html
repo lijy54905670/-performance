@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>communityInfo</title>
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.css}" rel="stylesheet">
+    <script th:src="@{/webjars/jquery/3.3.1-2/jquery.min.js}"></script>
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+        .img-size{
+            max-width: 50px;
+            max-height: 50px;
+        }
+        .div-margin-vertical1{
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<div th:replace="style::#topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="style::#sidebar"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <!--导航栏-->
+            <div th:replace="style::#communitybar"></div>
+            <div class="container div-margin-vertical1">
+                <div class="row clearfix">
+                    <div class="col-md-8 column">
+                        <div div-margin-vertical1>
+                            <h3>精品贴</h3>
+                        </div>
+                        <!--/*@thymesVar id="postIsRecommend" type=""*/-->
+                        <div th:each="postInfoIsRecommend : ${postIsRecommend}" class="card-header"  >
+                            <h5 class="mb-0">
+                                <a href="#collapseOne" th:href="@{/post/postInfo(id=${postInfoIsRecommend.id})}" target="_blank" data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="collapseOne">
+                                    [[${postInfoIsRecommend.title}]]
+                                </a>
+                            </h5>
+                        </div>
+                        </div>
+
+
+                    <div class="col-md-4 column" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="div-margin">
+                            <h3>社团介绍</h3>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" role="tab" id="headingThree">
+                                <div style="float: left;width: 75%"><h5 class="mb-0">
+                                        [[${communityInfo.name}]]
+                                </h5></div>
+
+                                <!--/*@thymesVar id="isJoin" type=""*/-->
+                                <!--/*@thymesVar id="community" type=""*/-->
+                                <!--/*@thymesVar id="schoolName" type=""*/-->
+                                <a href="#" class="btn btn-primary btn-sm" th:href="@{/join}"
+                                   th:if="${isJoin==false && isSchool==true}">加入</a>
+                                <button type="button" class="btn btn-secondary btn-sm" disabled th:if="${isJoin}==true">已加入</button>
+                                <!--/*@thymesVar id="isAudit" type=""*/-->
+                                <button type="button" class="btn btn-secondary btn-sm" disabled th:if="${isAudit}==true">待审核</button>
+                            </div>
+                            <div id="collapseThree" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="card-block">
+                                    社团描述：[[${communityInfo.description}]]
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>postInfo</title>
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.css}" rel="stylesheet">
+    <script th:src="@{/webjars/jquery/3.3.1-2/jquery.min.js}"></script>
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+        hr {
+            -moz-border-bottom-colors: none;
+            -moz-border-image: none;
+            -moz-border-left-colors: none;
+            -moz-border-right-colors: none;
+            -moz-border-top-colors: none;
+            border-color: #EEEEEE -moz-use-text-color #FFFFFF;
+            border-style: solid none;
+            border-width: 1px 0;
+            margin: 18px 0;
+        }
+
+        .div-left{
+            width: 90%;
+            float:right;
+        }
+        .div-right{
+            width: 10%;
+            float:right;
+        }
+        .img-size{
+
+            max-width: 60px;
+            max-height: 60px;
+            background-color:pink;
+        }
+    </style>
+</head>
+
+<body>
+<div th:replace="style::#topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="style::#sidebar"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="container div-margin-vertical1">
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
+                        <div class="card-header">
+                            <h4 class="mb-0">
+                                [[${postInfo.title}]]
+                            </h4>
+                            <div style="margin-top: 15px"><p>[[${postInfo.description}]]</p></div>
+                        </div>
+                        <ul class="list-group">
+                            <!--/*@thymesVar id="commentInfo" type=""*/-->
+                            <li th:each="comments : ${commentInfo}" class="list-group-item">
+                                <div class="div-left">
+                                    <p>[[${comments.description}]]</p>
+                                </div>
+                                <div class="div-right">
+                                    <img class="img-size" src="#" th:src="@{/uploadFile/{path1}(path1=${session.user.image})}">
+                                    <p>[[${comments.userName}]]</p>
+                                </div>
+                            </li>
+                        </ul>
+                        <div style="margin-top: 10px">
+                            <form th:action="@{/post/addComment}" method="post">
+                                <!--/*@thymesVar id="postInfo" type=""*/-->
+                                <input type="hidden" name="postId" th:value="${postInfo.id}">
+                                <input type="hidden" name="userName" th:value="${session.user.userName}">
+                                <div th:if="${session.isMember==true || postInfo.status==1 }" style="margin-top: 10px">
+                                    <textarea name="comment" rows="3" cols="110">
+                                    </textarea><br>
+                                    <button type="submit" class="btn-sm">发布</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+</body>
+</html>

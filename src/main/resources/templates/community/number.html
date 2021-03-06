@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>社团成员</title>
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.css}" rel="stylesheet">
+    <script th:src="@{/webjars/jquery/3.3.1-2/jquery.min.js}"></script>
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+        #bg{
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index:1;
+            -moz-opacity: 0.7;
+            opacity:.70;
+            filter: alpha(opacity=70);
+        }
+
+        #auditList{
+            border-radius:5px;
+            display: none;
+            position: absolute;
+            top: 25%;
+            left: 25%;
+            width: 40%;
+            height: 60%;
+            padding-top: 0px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 20px;
+            background-color: white;
+            color: white;
+            z-index:2;
+            overflow: auto;
+            box-shadow: darkgrey;
+        }
+    </style>
+
+    <script type="text/javascript" th:inline="none">
+        function auditList() {
+            document.getElementById('auditList').style.display='block'
+            document.getElementById('bg').style.display='block'
+        }
+        function closeCreate() {
+            document.getElementById('auditList').style.display='none'
+            document.getElementById('bg').style.display='none'
+        }
+    </script>
+
+    <script type="text/javascript">
+        function rightMange() {
+            //document.getElementById('Uid').value=id;
+            document.getElementById('right').style.display='block';
+        }
+        function closeright() {
+            document.getElementById('right').style.display='none'
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("button").click(function(){
+                var id=this.value;
+                var str=$("#"+id).text();
+                if(str=="权限管理"){
+                    document.getElementById('Uid').value=id;
+                    document.getElementById('right').style.display='block';
+                }
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+<div th:replace="style::#topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="style::#sidebar"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div th:replace="style::#communitybar"></div>
+            <div class="container">
+                <div class="row clearfix">
+                    <div class="col-md-6 column">
+                        <div class="input-group input-group mb-3">
+                            <form class="form-inline" th:action="@{/community/fuzzySearch}" method="post">
+                            <input placeholder="成员搜索" name="Uname" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">搜索</button>
+                                <button th:if="${session.level}<2" type="button" onclick="auditList()" class="btn btn-secondary">审核列表</button>
+                            </div>
+                            </form>
+                        </div>
+                        <div class="pre-scrollable">
+                            <ul class="list-group">
+                                <!--/*@thymesVar id="userList" type=""*/-->
+                                <li th:if="${flag}==1" th:each="userList : ${searchUserList}" class="list-group-item ">
+                                    <div>
+                                        <div style="width: 55%;float: left">[[${userList.userName}]] ([[${userList.levelName}]])</div>
+                                        <a th:if="${session.level<1 && userList.numberLevel>0}" class='btn btn-outline-secondary btn-sm' th:href="@{/community/DeleteUser(Uid=${userList.userId},Cid=${session.communityId})}">删除</a>
+                                        <!--/*@thymesVar id="id" type=""*/-->
+                                        <!--/*@thymesVar id="userName" type=""*/-->
+                                        <button th:if="${session.level}<${userList.numberLevel}" th:id="${userList.userId}" th:value="${userList.userId}" class='btn btn-outline-secondary btn-sm' th:text="权限管理"></button>
+                                    </div>
+                                </li>
+                                <!--选择显示内容-->
+                                <!--/*@thymesVar id="flag" type=""*/-->
+                                <li th:if="${flag}==0" th:each="userList : ${userList}" class="list-group-item ">
+                                    <div>
+                                        <div style="width: 55%;float: left">[[${userList.userName}]] ([[${userList.levelName}]])</div>
+                                        <a th:if="${session.level<1 && userList.numberLevel>0}" class='btn btn-outline-secondary btn-sm' th:href="@{/community/DeleteUser(Uid=${userList.userId},Cid=${session.communityId})}">删除</a>
+                                        <!--/*@thymesVar id="id" type=""*/-->
+                                        <!--/*@thymesVar id="userName" type=""*/-->
+                                        <button th:if="${session.level}<${userList.numberLevel}" th:id="${userList.userId}" th:value="${userList.userId}" class='btn btn-outline-secondary btn-sm' th:text="权限管理"></button>
+                                    </div>
+                                </li>
+                            </ul>
+                    </div>
+                </div>
+
+
+                    <div class="col-md-6 column">
+                        <h3 style="margin-top: 12px">社团干部</h3>
+                        <div class="pre-scrollable" >
+                        <ul class="list-group">
+                            <!--/*@thymesVar id="userList" type=""*/-->
+                            <li class="list-group-item " th:if="${userList.numberLevel}<3" th:each="userList : ${userList}">
+                                <div>
+                                    <div style="width: 55%;float: left">[[${userList.userName}]] ([[${userList.levelName}]])</div>
+                                    <a th:if="${session.level<1 && userList.numberLevel>0}" class='btn btn-outline-secondary btn-sm' href="#">删除</a>
+                                    <button th:if="${session.level}<${userList.numberLevel}" th:id="${userList.userId}" th:value="${userList.userId}" class='btn btn-outline-secondary btn-sm' th:text="权限管理"></button>
+                                </div>
+                            </li>
+                        </ul>
+                        </div>
+                    </div>
+            </div>
+            </div>
+        </main>
+
+        <!--权限管理-->
+        <div class="modal" tabindex="-1" role="dialog" th:id="right" style="display: none;margin-top: 10%">
+            <div class="modal-dialog" role="document">
+                <form th:action="@{/community/SetPermissions}" method="post">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">权限管理</h5>
+                        <button onclick="closeright()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                                    <input type="hidden" id="Uid" value="" name="Uid">
+                                职位：<select type="text" class="form-control" placeholder="权限选择" name="level">
+                                    <option th:if="${session.level}<1" th:value="1">部长</option>
+                                    <option th:if="${session.level}<2" th:value="2">副部长</option>
+                                    <option th:if="${session.level}<3" th:value="3">社员</option>
+                                </select>
+                                职位名称：<input class="form-control" name="name" value="" placeholder="职位名称">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="closeright()" type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+
+        <!--审核列表-->
+        <div id="bg"></div>
+        <div id="auditList">
+            <!--设置审核权限-->
+            <div class="modal-header">
+                <h5 style="color: black !important">审核列表</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeCreate()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <ul class="list-group">
+                <!--/*@thymesVar id="auditUserList" type=""*/-->
+                <li th:each="auditUser : ${auditUserList}" class="list-group-item ">
+                    <div>
+                        <div style="width: 55%;float: left;color: black !important" >[[${auditUser.userName}]]</div>
+                        <a class='btn btn-outline-secondary btn-sm' th:href="@{/community/agreeJoin(Uid=${auditUser.id})}">同意</a>
+                        <a class='btn btn-outline-secondary btn-sm' th:href="@{/community/DeleteUser(Uid=${auditUser.id},Cid=${session.communityId})}">拒绝</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+</div>
+</body>
+
+</html>
