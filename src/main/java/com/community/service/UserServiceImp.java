@@ -1,10 +1,10 @@
-package com.community.service;
+package com.performane.service;
 
-import com.community.controller.UserController;
-import com.community.entity.User;
-import com.community.mapper.UserMapper;
-import com.community.pojo.UserJoinedCommunity;
-import com.community.service.serviceInterface.UserService;
+import com.performane.controller.UserController;
+import com.performane.entity.User;
+import com.performane.mapper.UserMapper;
+import com.performane.pojo.UserJoinedperformane;
+import com.performane.service.serviceInterface.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,19 +103,19 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void joinCommunity(Integer communityId, Integer userId) {
-        userMapper.InsertCommunityUser(communityId,userId);
+    public void joinperformane(Integer performaneId, Integer userId) {
+        userMapper.InsertperformaneUser(performaneId,userId);
     }
 
     @Override
-    public void joinedCommunity(Integer Uid, Model model) {
-        List<UserJoinedCommunity> userJoinedCommunities=userMapper.findJoinedCommunity(Uid);
+    public void joinedperformane(Integer Uid, Model model) {
+        List<UserJoinedperformane> userJoinedCommunities=userMapper.findJoinedperformane(Uid);
 
         if(!userJoinedCommunities.isEmpty()){
-            model.addAttribute("joinedCommunity",userJoinedCommunities);
+            model.addAttribute("joinedperformane",userJoinedCommunities);
 
 
-            Iterator<UserJoinedCommunity> iterator=userJoinedCommunities.iterator();
+            Iterator<UserJoinedperformane> iterator=userJoinedCommunities.iterator();
             while (iterator.hasNext()){
                 System.out.println(iterator.next().toString());
             }

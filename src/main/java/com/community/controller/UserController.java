@@ -1,7 +1,7 @@
-package com.community.controller;
+package com.performane.controller;
 
-import com.community.entity.User;
-import com.community.service.UserServiceImp;
+import com.performane.entity.User;
+import com.performane.service.UserServiceImp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,22 +74,22 @@ public class UserController {
 
     //用户加入社团
     @RequestMapping("/join")
-    public String joinCommunity(HttpSession session){
+    public String joinperformane(HttpSession session){
         System.out.println("进入");
         User user = (User) session.getAttribute("user");
         Integer userId = user.getId();
-        Integer communityId = (Integer) session.getAttribute("communityId");
-        userServiceImp.joinCommunity(communityId,userId);
-        return "redirect:/community/communityInfo/?id="+communityId;
+        Integer performaneId = (Integer) session.getAttribute("performaneId");
+        userServiceImp.joinperformane(performaneId,userId);
+        return "redirect:/performane/performaneInfo/?id="+performaneId;
     }
 
     //我的社团
-    @RequestMapping("/myCommunity")
-    public String myCommunity(Model model,HttpSession session){
+    @RequestMapping("/myperformane")
+    public String myperformane(Model model,HttpSession session){
         User user= (User) session.getAttribute("user");
         int userId=user.getId();
-        userServiceImp.joinedCommunity(userId,model);
+        userServiceImp.joinedperformane(userId,model);
         System.out.println("用户id:"+userId);
-        return "community/myCommunity";
+        return "performane/myperformane";
     }
 }

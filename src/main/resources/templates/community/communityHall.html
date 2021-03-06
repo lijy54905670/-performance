@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>communityHall</title>
+    <title>performaneHall</title>
     <!-- Bootstrap core CSS -->
     <link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.css}" rel="stylesheet">
     <script th:src="@{/webjars/jquery/3.3.1-2/jquery.min.js}"></script>
@@ -110,7 +110,7 @@
                 var sname = $("#box2").val();
                 $.ajax({
                     type : "POST",
-                    url : "/showCommunityListBySname",
+                    url : "/showperformaneListBySname",
                     data : {
                         'sname' : sname
                     },
@@ -156,7 +156,7 @@
                                         <option>请选择</option>
                                     </select>
                                 </div>
-                            <form class="form-inline" th:action="@{/community/showCommunityBySname/1}" method="post">
+                            <form class="form-inline" th:action="@{/performane/showperformaneBySname/1}" method="post">
                                 <button class="btn btn-outline-secondary" type="submit" id="button-addon2">搜索</button>
                             </form>
                         </div>
@@ -165,12 +165,12 @@
 
 
                 <div class="row clearfix">
-                    <!--/*@thymesVar id="communityUserLists" type=""*/-->
-                    <div th:each="community : ${communityUserLists}" class="col-md-3 column">
-                        <div class="div-community">
-                            <h6 class="card-title ">[[${community.communityName}]]</h6>
-                            <p class="card-text">学校：[[${community.schoolName}]]<br> 人数：[[${community.personNum}]]</p>
-                            <a href="#" th:href="@{/community/communityInfo(id=${community.id})}" class="card-link">查看</a>
+                    <!--/*@thymesVar id="performaneUserLists" type=""*/-->
+                    <div th:each="performane : ${performaneUserLists}" class="col-md-3 column">
+                        <div class="div-performane">
+                            <h6 class="card-title ">[[${performane.performaneName}]]</h6>
+                            <p class="card-text">学校：[[${performane.schoolName}]]<br> 人数：[[${performane.personNum}]]</p>
+                            <a href="#" th:href="@{/performane/performaneInfo(id=${performane.id})}" class="card-link">查看</a>
                         </div>
                     </div>
                 </div>
@@ -178,18 +178,18 @@
 
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link" th:if="${pageNum}>1" th:href="@{'/community/communityHall/'+${pageNum -1}}">上一页</a>
+                            <a class="page-link" th:if="${pageNum}>1" th:href="@{'/performane/performaneHall/'+${pageNum -1}}">上一页</a>
                         </li>
                         <!--/*@thymesVar id="maxPage" type=""*/-->
                         <li class="page-item" th:if="${maxPage}<=10" th:each="i:${#numbers.sequence(1,maxPage)}" th:id="${i}">
-                            <a class="page-link"  th:href="@{'/community/communityHall/'+${i}}" th:text="${i}"></a>
+                            <a class="page-link"  th:href="@{'/performane/performaneHall/'+${i}}" th:text="${i}"></a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="#" th:if="${pageNum+1}<=${maxPage}" th:href="@{'/community/communityHall/'+${pageNum+1}}">下一页</a>
+                            <a class="page-link" href="#" th:if="${pageNum+1}<=${maxPage}" th:href="@{'/performane/performaneHall/'+${pageNum+1}}">下一页</a>
                         </li>
                         <li class="page-item">
                             <!--/*@thymesVar id="maxPage" type=""*/-->
-                            <a class="page-link" href="#" th:href="@{'/community/communityHall/'+${maxPage}}">尾页</a>
+                            <a class="page-link" href="#" th:href="@{'/performane/performaneHall/'+${maxPage}}">尾页</a>
                         </li>
                     </ul>
                 </nav>

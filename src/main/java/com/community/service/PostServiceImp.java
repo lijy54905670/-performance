@@ -1,9 +1,9 @@
-package com.community.service;
+package com.performane.service;
 
-import com.community.entity.Comment;
-import com.community.entity.Post;
-import com.community.mapper.PostMapper;
-import com.community.service.serviceInterface.PostService;
+import com.performane.entity.Comment;
+import com.performane.entity.Post;
+import com.performane.mapper.PostMapper;
+import com.performane.service.serviceInterface.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

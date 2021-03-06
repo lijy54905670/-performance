@@ -1,6 +1,6 @@
-package com.community.mapper;
+package com.performane.mapper;
 
-import com.community.entity.District;
+import com.performane.entity.District;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 

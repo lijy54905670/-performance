@@ -1,10 +1,10 @@
-package com.community.entity;
+package com.performane.entity;
 
 public class Post {
     private Integer id;
     private String title;
     private String description;
-    private Integer communityId;
+    private Integer performaneId;
     private Integer userId;
     private Integer status;
     private String isRecommend;
@@ -33,12 +33,12 @@ public class Post {
         this.description = description;
     }
 
-    public Integer getCommunityId() {
-        return communityId;
+    public Integer getperformaneId() {
+        return performaneId;
     }
 
-    public void setCommunityId(Integer communityId) {
-        this.communityId = communityId;
+    public void setperformaneId(Integer performaneId) {
+        this.performaneId = performaneId;
     }
 
     public Integer getUserId() {
@@ -71,7 +71,7 @@ public class Post {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", communityId=" + communityId +
+                ", performaneId=" + performaneId +
                 ", userId=" + userId +
                 ", status=" + status +
                 ", isRecommend='" + isRecommend + '\'' +

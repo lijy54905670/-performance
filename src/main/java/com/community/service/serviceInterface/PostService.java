@@ -1,7 +1,7 @@
-package com.community.service.serviceInterface;
+package com.performane.service.serviceInterface;
 
-import com.community.entity.Comment;
-import com.community.entity.Post;
+import com.performane.entity.Comment;
+import com.performane.entity.Post;
 import org.springframework.ui.Model;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.community.entity;
+package com.performane.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -8,7 +8,7 @@ public class Activity {
     private Integer id;
     private String title;
     private String description;
-    private Integer communityId;
+    private Integer performaneId;
     private String image;
     private Integer userId;
     private Integer isHistory;
@@ -67,12 +67,12 @@ public class Activity {
         this.description = description;
     }
 
-    public Integer getCommunityId() {
-        return communityId;
+    public Integer getperformaneId() {
+        return performaneId;
     }
 
-    public void setCommunityId(Integer communityId) {
-        this.communityId = communityId;
+    public void setperformaneId(Integer performaneId) {
+        this.performaneId = performaneId;
     }
 
     public String getImage() {
@@ -121,7 +121,7 @@ public class Activity {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", communityId=" + communityId +
+                ", performaneId=" + performaneId +
                 ", image='" + image + '\'' +
                 ", userId=" + userId +
                 ", isHistory=" + isHistory +

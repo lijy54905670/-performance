@@ -1,10 +1,10 @@
-package com.community;
+package com.performane;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CommunityApplicationTests {
+class PerformaneApplicationTests {
 
     @Test
     void contextLoads() {

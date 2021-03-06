@@ -1,4 +1,4 @@
-package com.community.pojo;
+package com.performane.pojo;
 
 public class PostIsRecommend {
     private Integer id;

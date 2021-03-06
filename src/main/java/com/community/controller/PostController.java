@@ -1,9 +1,9 @@
-package com.community.controller;
+package com.performane.controller;
 
-import com.community.entity.Comment;
-import com.community.entity.Post;
-import com.community.entity.User;
-import com.community.service.PostServiceImp;
+import com.performane.entity.Comment;
+import com.performane.entity.Post;
+import com.performane.entity.User;
+import com.performane.service.PostServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,7 +47,7 @@ public class PostController {
         }else {
             System.out.println("不是社团成员");
         }
-        return "postcomment/communityPost";
+        return "postcomment/performanePost";
     }
 
     //添加帖子
@@ -59,12 +59,12 @@ public class PostController {
         post.setDescription(request.getParameter("text"));
         User user = (User) session.getAttribute("user");
         post.setUserId(user.getId());
-        int communityId=(int)session.getAttribute("communityId");
-        post.setCommunityId(communityId);
+        int performaneId=(int)session.getAttribute("performaneId");
+        post.setperformaneId(performaneId);
         System.out.println(post.toString());
         postServiceImp.addPost(post);
-        //String uri="/post/postList(id="+communityId+")";
-        return "redirect:/post/postList?id="+communityId;
+        //String uri="/post/postList(id="+performaneId+")";
+        return "redirect:/post/postList?id="+performaneId;
     }
 
     //给帖子加精

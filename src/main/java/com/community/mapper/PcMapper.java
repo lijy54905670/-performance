@@ -1,9 +1,9 @@
-package com.community.mapper;
+package com.performane.mapper;
 
-import com.community.entity.Community;
-import com.community.entity.School;
-import com.community.pojo.City;
-import com.community.pojo.Province;
+import com.performane.entity.performane;
+import com.performane.entity.School;
+import com.performane.pojo.City;
+import com.performane.pojo.Province;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -18,6 +18,6 @@ public interface PcMapper {
     @Select("select * from school where city=#{Cname}")
     public List<School> findSchoolListByCname(String Cname);
 
-    @Select("select * from community where school_name=#{Sname}")
-    public List<Community> findCommunityListBySname(String Sname);
+    @Select("select * from performane where school_name=#{Sname}")
+    public List<performane> findperformaneListBySname(String Sname);
 }

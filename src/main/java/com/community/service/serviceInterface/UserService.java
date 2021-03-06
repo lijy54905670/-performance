@@ -1,6 +1,6 @@
-package com.community.service.serviceInterface;
+package com.performane.service.serviceInterface;
 
-import com.community.entity.User;
+import com.performane.entity.User;
 import org.springframework.http.HttpRequest;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +19,7 @@ public interface UserService {
     //文件路径转换
     public String file(MultipartFile file, HttpServletRequest request);
     //加入某个社团
-    public void joinCommunity(Integer communityId, Integer userId);
+    public void joinperformane(Integer performaneId, Integer userId);
     //查看用户已加入社团
-    public void joinedCommunity(Integer Uid, Model model);
+    public void joinedperformane(Integer Uid, Model model);
 }

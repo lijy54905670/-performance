@@ -16,10 +16,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#" th:href="@{/community/communityHall/1}">社团大厅</a>
+                <a class="nav-link" href="#" th:href="@{/performane/performaneHall/1}">社团大厅</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0" th:action="@{/community/searchCommunity/1}" method="post">
+        <form class="form-inline my-2 my-lg-0" th:action="@{/performane/searchperformane/1}" method="post">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="Cname">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">社团搜索</button>
         </form>
@@ -59,7 +59,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/myCommunity}">
+                <a class="nav-link" th:href="@{/myperformane}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
                         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                         <circle cx="9" cy="7" r="4"></circle>
@@ -74,22 +74,22 @@
 </nav>
 
 <!--社团导航栏-->
-<nav class="navbar navbar-expand-lg navbar-light bg-light" id="communitybar">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="performanebar">
     <!--社团头像-->
 
     <div class="collapse navbar-collapse" >
         <ul class="navbar-nav mr-auto">
             <li>
-                <a class="nav-link active" href="#" th:href="@{/community/communityInfo(id=${session.communityId})}">[[${session.communityName}]]</a>
+                <a class="nav-link active" href="#" th:href="@{/performane/performaneInfo(id=${session.performaneId})}">[[${session.performaneName}]]</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#" th:href="@{/activitys/communityActivity(id=${session.communityId})}">活动 <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#" th:href="@{/activitys/performaneActivity(id=${session.performaneId})}">活动 <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" th:href="@{/post/postList(id=${session.communityId})}">帖子</a>
+                <a class="nav-link" href="#" th:href="@{/post/postList(id=${session.performaneId})}">帖子</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" th:href="@{/community/findUser(id=${session.communityId})}" tabindex="-1" aria-disabled="true">成员</a>
+                <a class="nav-link" href="#" th:href="@{/performane/findUser(id=${session.performaneId})}" tabindex="-1" aria-disabled="true">成员</a>
             </li>
         </ul>
     </div>

@@ -1,7 +1,7 @@
-package com.community.pojo;
+package com.performane.pojo;
 
 //查看社团成员
-public class CommunityUserInfo {
+public class performaneUserInfo {
     private Integer userId;
     private String userName;
     private Integer numberLevel;
@@ -41,7 +41,7 @@ public class CommunityUserInfo {
 
     @Override
     public String toString() {
-        return "CommunityUserInfo{" +
+        return "performaneUserInfo{" +
                 "UserId=" + userId +
                 ", userName='" + userName + '\'' +
                 ", numberLevel=" + numberLevel +

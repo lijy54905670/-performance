@@ -106,12 +106,12 @@
     <div class="row">
         <div th:replace="style::#sidebar"></div>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-            <div th:replace="style::#communitybar"></div>
+            <div th:replace="style::#performanebar"></div>
             <div class="container">
                 <div class="row clearfix">
                     <div class="col-md-6 column">
                         <div class="input-group input-group mb-3">
-                            <form class="form-inline" th:action="@{/community/fuzzySearch}" method="post">
+                            <form class="form-inline" th:action="@{/performane/fuzzySearch}" method="post">
                             <input placeholder="成员搜索" name="Uname" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="submit" id="button-addon2">搜索</button>
@@ -125,7 +125,7 @@
                                 <li th:if="${flag}==1" th:each="userList : ${searchUserList}" class="list-group-item ">
                                     <div>
                                         <div style="width: 55%;float: left">[[${userList.userName}]] ([[${userList.levelName}]])</div>
-                                        <a th:if="${session.level<1 && userList.numberLevel>0}" class='btn btn-outline-secondary btn-sm' th:href="@{/community/DeleteUser(Uid=${userList.userId},Cid=${session.communityId})}">删除</a>
+                                        <a th:if="${session.level<1 && userList.numberLevel>0}" class='btn btn-outline-secondary btn-sm' th:href="@{/performane/DeleteUser(Uid=${userList.userId},Cid=${session.performaneId})}">删除</a>
                                         <!--/*@thymesVar id="id" type=""*/-->
                                         <!--/*@thymesVar id="userName" type=""*/-->
                                         <button th:if="${session.level}<${userList.numberLevel}" th:id="${userList.userId}" th:value="${userList.userId}" class='btn btn-outline-secondary btn-sm' th:text="权限管理"></button>
@@ -136,7 +136,7 @@
                                 <li th:if="${flag}==0" th:each="userList : ${userList}" class="list-group-item ">
                                     <div>
                                         <div style="width: 55%;float: left">[[${userList.userName}]] ([[${userList.levelName}]])</div>
-                                        <a th:if="${session.level<1 && userList.numberLevel>0}" class='btn btn-outline-secondary btn-sm' th:href="@{/community/DeleteUser(Uid=${userList.userId},Cid=${session.communityId})}">删除</a>
+                                        <a th:if="${session.level<1 && userList.numberLevel>0}" class='btn btn-outline-secondary btn-sm' th:href="@{/performane/DeleteUser(Uid=${userList.userId},Cid=${session.performaneId})}">删除</a>
                                         <!--/*@thymesVar id="id" type=""*/-->
                                         <!--/*@thymesVar id="userName" type=""*/-->
                                         <button th:if="${session.level}<${userList.numberLevel}" th:id="${userList.userId}" th:value="${userList.userId}" class='btn btn-outline-secondary btn-sm' th:text="权限管理"></button>
@@ -169,7 +169,7 @@
         <!--权限管理-->
         <div class="modal" tabindex="-1" role="dialog" th:id="right" style="display: none;margin-top: 10%">
             <div class="modal-dialog" role="document">
-                <form th:action="@{/community/SetPermissions}" method="post">
+                <form th:action="@{/performane/SetPermissions}" method="post">
                     <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">权限管理</h5>
@@ -212,8 +212,8 @@
                 <li th:each="auditUser : ${auditUserList}" class="list-group-item ">
                     <div>
                         <div style="width: 55%;float: left;color: black !important" >[[${auditUser.userName}]]</div>
-                        <a class='btn btn-outline-secondary btn-sm' th:href="@{/community/agreeJoin(Uid=${auditUser.id})}">同意</a>
-                        <a class='btn btn-outline-secondary btn-sm' th:href="@{/community/DeleteUser(Uid=${auditUser.id},Cid=${session.communityId})}">拒绝</a>
+                        <a class='btn btn-outline-secondary btn-sm' th:href="@{/performane/agreeJoin(Uid=${auditUser.id})}">同意</a>
+                        <a class='btn btn-outline-secondary btn-sm' th:href="@{/performane/DeleteUser(Uid=${auditUser.id},Cid=${session.performaneId})}">拒绝</a>
                     </div>
                 </li>
             </ul>

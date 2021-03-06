@@ -1,9 +1,9 @@
-package com.community.controller;
+package com.performane.controller;
 
 
-import com.community.entity.School;
-import com.community.pojo.City;
-import com.community.service.PcServiceImp;
+import com.performane.entity.School;
+import com.performane.pojo.City;
+import com.performane.service.PcServiceImp;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,8 +52,8 @@ public class PcController {
         response.getWriter().close();
 
     }
-    @RequestMapping("/showCommunityListBySname")
-    public void showCommunityListBySname(HttpServletRequest request,HttpSession session,HttpServletResponse response, String sname) throws IOException {
+    @RequestMapping("/showperformaneListBySname")
+    public void showperformaneListBySname(HttpServletRequest request,HttpSession session,HttpServletResponse response, String sname) throws IOException {
         response.setContentType("text/html;charset=UTF-8");
         System.out.println("城市名字"+sname);// 打印前台ajax传来的学校名字
         session.setAttribute("schoolName",sname);

@@ -1,7 +1,7 @@
-package com.community.mapper;
+package com.performane.mapper;
 
-import com.community.entity.Comment;
-import com.community.entity.Post;
+import com.performane.entity.Comment;
+import com.performane.entity.Post;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -19,11 +19,11 @@ public interface PostMapper {
     public List<Comment> FindCommentByPostId(Integer id);
 
     //查看某个社团所有帖子列表（05-13）
-    @Select("select * from post where community_id=#{id}")
+    @Select("select * from post where performane_id=#{id}")
     public List<Post> FindPostListById(Integer id);
 
     //添加帖子
-    @Insert("insert into post(title,status,description,community_id,user_id,is_recommend) values(#{title},#{status},#{description},#{communityId},#{userId},0)")
+    @Insert("insert into post(title,status,description,performane_id,user_id,is_recommend) values(#{title},#{status},#{description},#{performaneId},#{userId},0)")
     public int insertPost(Post post);
 
     //为帖子加精
@@ -32,7 +32,7 @@ public interface PostMapper {
 
     //根据某个社员查找帖子
     @Select("SELECT post.*,c.`name` from post inner JOIN `user` u on u.id = post.user_id \n" +
-            "inner JOIN `community` c on c.id=post.community_id\n" +
+            "inner JOIN `performane` c on c.id=post.performane_id\n" +
             "where u.id=#{userId}")
     public List<Post> FinAllPostByUserId(Integer userId);
 

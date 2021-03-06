@@ -1,18 +1,18 @@
-package com.community.pojo;
+package com.performane.pojo;
 
-public class UserJoinedCommunity {
-    private Integer communityId;
+public class UserJoinedperformane {
+    private Integer performaneId;
     private Integer numberLevel;
-    private String communityName;
+    private String performaneName;
     private String levelName;
     private Integer auditStatus;
 
-    public Integer getCommunityId() {
-        return communityId;
+    public Integer getperformaneId() {
+        return performaneId;
     }
 
-    public void setCommunityId(Integer communityId) {
-        this.communityId = communityId;
+    public void setperformaneId(Integer performaneId) {
+        this.performaneId = performaneId;
     }
 
     public Integer getNumberLevel() {
@@ -23,12 +23,12 @@ public class UserJoinedCommunity {
         this.numberLevel = numberLevel;
     }
 
-    public String getCommunityName() {
-        return communityName;
+    public String getperformaneName() {
+        return performaneName;
     }
 
-    public void setCommunityName(String communityName) {
-        this.communityName = communityName;
+    public void setperformaneName(String performaneName) {
+        this.performaneName = performaneName;
     }
 
     public String getLevelName() {
@@ -49,10 +49,10 @@ public class UserJoinedCommunity {
 
     @Override
     public String toString() {
-        return "UserJoinedCommunity{" +
-                "communityId=" + communityId +
+        return "UserJoinedperformane{" +
+                "performaneId=" + performaneId +
                 ", numberLevel=" + numberLevel +
-                ", communityName='" + communityName + '\'' +
+                ", performaneName='" + performaneName + '\'' +
                 ", levelName='" + levelName + '\'' +
                 ", auditStatus=" + auditStatus +
                 '}';

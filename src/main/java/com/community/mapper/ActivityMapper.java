@@ -1,7 +1,7 @@
-package com.community.mapper;
+package com.performane.mapper;
 
-import com.community.entity.Activity;
-import com.community.pojo.ActivityUser;
+import com.performane.entity.Activity;
+import com.performane.pojo.ActivityUser;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -11,16 +11,16 @@ import java.util.List;
 
 public interface ActivityMapper {
     //查看活动  (1代表历史活动)
-    @Select("select * from activity where community_id=#{id} and is_history<>1 ")
-    public List<Activity> FindActivityInfoByCommunityId(Integer id);
+    @Select("select * from activity where performane_id=#{id} and is_history<>1 ")
+    public List<Activity> FindActivityInfoByperformaneId(Integer id);
     //查看历史活动  (0代表历史活动)
-    @Select("select * from activity where community_id=#{id} and is_history<>0 ")
-    public List<Activity> FindHistoryActivityInfoByCommunityId(Integer id);
+    @Select("select * from activity where performane_id=#{id} and is_history<>0 ")
+    public List<Activity> FindHistoryActivityInfoByperformaneId(Integer id);
 
     //创建活动
-    @Insert("insert into activity(title,description,community_id,image,user_id,is_history,\n"+
+    @Insert("insert into activity(title,description,performane_id,image,user_id,is_history,\n"+
                 "applystart_date,applyend_date,location,activity_date,flag) values(#{title},#{description},\n"+
-            "#{communityId},#{image},#{userId},0,#{applystartDate},#{applyendDate},#{location},#{activityDate},#{flag})")
+            "#{performaneId},#{image},#{userId},0,#{applystartDate},#{applyendDate},#{location},#{activityDate},#{flag})")
     public int CreateActivity(Activity activity);
 
     //查看活动详细
@@ -32,7 +32,7 @@ public interface ActivityMapper {
     public int JoinActivity(Integer Uid,Integer Aid);
 
     //通过活动名查找活动ID
-    @Select("select id from activity where title=#{Aname} and community_id=#{Cid}")
+    @Select("select id from activity where title=#{Aname} and performane_id=#{Cid}")
     public String FindActivityIdByName(String Aname,Integer Cid);
 
     //显示已报名成员

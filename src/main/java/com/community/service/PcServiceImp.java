@@ -1,11 +1,11 @@
-package com.community.service;
+package com.performane.service;
 
-import com.community.entity.Community;
-import com.community.entity.School;
-import com.community.mapper.PcMapper;
-import com.community.pojo.City;
-import com.community.pojo.Province;
-import com.community.service.serviceInterface.PcService;
+import com.performane.entity.performane;
+import com.performane.entity.School;
+import com.performane.mapper.PcMapper;
+import com.performane.pojo.City;
+import com.performane.pojo.Province;
+import com.performane.service.serviceInterface.PcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,7 +50,7 @@ public class PcServiceImp implements PcService {
     }
 
     @Override
-    public List<Community> showCommunityListBySname(String Sname) {
-        return pcMapper.findCommunityListBySname(Sname);
+    public List<performane> showperformaneListBySname(String Sname) {
+        return pcMapper.findperformaneListBySname(Sname);
     }
 }

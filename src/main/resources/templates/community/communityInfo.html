@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>communityInfo</title>
+    <title>performaneInfo</title>
     <!-- Bootstrap core CSS -->
     <link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.css}" rel="stylesheet">
     <script th:src="@{/webjars/jquery/3.3.1-2/jquery.min.js}"></script>
@@ -47,7 +47,7 @@
         <div th:replace="style::#sidebar"></div>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <!--导航栏-->
-            <div th:replace="style::#communitybar"></div>
+            <div th:replace="style::#performanebar"></div>
             <div class="container div-margin-vertical1">
                 <div class="row clearfix">
                     <div class="col-md-8 column">
@@ -72,11 +72,11 @@
                         <div class="card">
                             <div class="card-header" role="tab" id="headingThree">
                                 <div style="float: left;width: 75%"><h5 class="mb-0">
-                                        [[${communityInfo.name}]]
+                                        [[${performaneInfo.name}]]
                                 </h5></div>
 
                                 <!--/*@thymesVar id="isJoin" type=""*/-->
-                                <!--/*@thymesVar id="community" type=""*/-->
+                                <!--/*@thymesVar id="performane" type=""*/-->
                                 <!--/*@thymesVar id="schoolName" type=""*/-->
                                 <a href="#" class="btn btn-primary btn-sm" th:href="@{/join}"
                                    th:if="${isJoin==false && isSchool==true}">加入</a>
@@ -86,7 +86,7 @@
                             </div>
                             <div id="collapseThree" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
                                 <div class="card-block">
-                                    社团描述：[[${communityInfo.description}]]
+                                    社团描述：[[${performaneInfo.description}]]
                                 </div>
                             </div>
                         </div>

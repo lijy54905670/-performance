@@ -1,7 +1,7 @@
-package com.community.controller;
+package com.performane.controller;
 
-import com.community.entity.User;
-import com.community.mapper.UserMapper;
+import com.performane.entity.User;
+import com.performane.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +22,7 @@ public class LoginController {
         if (user != null) {
             if(user.getPassword().equals(password)){
                 session.setAttribute("user",user);
-                return "redirect:/community/communityHall/1";
+                return "redirect:/performane/performaneHall/1";
             }else{
                 model.addAttribute("msg","密码错误");
                 return "index";

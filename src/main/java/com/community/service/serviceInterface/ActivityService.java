@@ -1,7 +1,7 @@
-package com.community.service.serviceInterface;
+package com.performane.service.serviceInterface;
 
-import com.community.entity.Activity;
-import com.community.pojo.ActivityUser;
+import com.performane.entity.Activity;
+import com.performane.pojo.ActivityUser;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.ui.Model;
 

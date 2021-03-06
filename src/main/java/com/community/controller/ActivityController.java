@@ -1,8 +1,8 @@
-package com.community.controller;
+package com.performane.controller;
 
-import com.community.entity.Activity;
-import com.community.entity.User;
-import com.community.service.ActivityServiceImp;
+import com.performane.entity.Activity;
+import com.performane.entity.User;
+import com.performane.service.ActivityServiceImp;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,25 +27,25 @@ public class ActivityController {
     @Autowired
     private ActivityServiceImp activityServiceImp;
 
-    @GetMapping("/communityActivity{id}")
-    public String ShowCommunityActivity(Model model, HttpServletRequest request){
+    @GetMapping("/performaneActivity{id}")
+    public String ShowperformaneActivity(Model model, HttpServletRequest request){
         String str = request.getParameter("id");
         int id=Integer.parseInt(str);
         activityServiceImp.ShowActivityInfo(model,id);
         activityServiceImp.ShowHistoryActivityInfo(model,id);
-        return "activity/communityActivity";
+        return "activity/performaneActivity";
     }
 
     //创建活动
     @PostMapping("/createActivity")
     public String CreateActivity(Activity activity , Model model, HttpSession session){
-        int Cid= (int) session.getAttribute("communityId");
+        int Cid= (int) session.getAttribute("performaneId");
         //生成系统当前时间
         Date applyStartDate1 = new Date();
         User user= (User) session.getAttribute("user");
         int Uid=user.getId();
         activity.setUserId(Uid);
-        activity.setCommunityId(Cid);
+        activity.setperformaneId(Cid);
         activity.setApplystartDate(applyStartDate1);
         activityServiceImp.CreateActivity(activity);
 
@@ -53,7 +53,7 @@ public class ActivityController {
         //插入活动创建人
         activityServiceImp.JoinActivity(Uid,Aid);
         //System.out.println(activity.toString()+"    "+sld.format(new Date()));
-        return "redirect:communityActivity?id="+Cid;
+        return "redirect:performaneActivity?id="+Cid;
     }
 
     //活动详细

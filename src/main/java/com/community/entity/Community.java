@@ -1,6 +1,6 @@
-package com.community.entity;
+package com.performane.entity;
 
-public class Community {
+public class performane {
     private Integer id;
     private String name;
     private String description;
@@ -67,7 +67,7 @@ public class Community {
 
     @Override
     public String toString() {
-        return "Community{" +
+        return "performane{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +

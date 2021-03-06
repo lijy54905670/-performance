@@ -1,4 +1,4 @@
-package com.community.config;
+package com.performane.config;
 
 import com.github.pagehelper.PageHelper;
 import org.springframework.context.annotation.Bean;
@@ -18,10 +18,10 @@ public class MyMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/information.html").setViewName("user/information");
         registry.addViewController("/postInfo.html").setViewName("postcomment/postInfo");
         registry.addViewController("/activityInfo.html").setViewName("activity/activityInfo");
-        registry.addViewController("/communityPost.html").setViewName("postcomment/communityPost");
-        registry.addViewController("/communityActivity.html").setViewName("activity/communityActivity");
-        registry.addViewController("/number.html").setViewName("community/number");
-        registry.addViewController("/myCommunity.html").setViewName("community/myCommunity");
+        registry.addViewController("/performanePost.html").setViewName("postcomment/performanePost");
+        registry.addViewController("/performaneActivity.html").setViewName("activity/performaneActivity");
+        registry.addViewController("/number.html").setViewName("performane/number");
+        registry.addViewController("/myperformane.html").setViewName("performane/myperformane");
         registry.addViewController("/myActivity.html").setViewName("activity/myActivity");
     }
 
@@ -38,6 +38,6 @@ public class MyMvcConfig implements WebMvcConfigurer {
         //静态资源；  *.css , *.js
         //SpringBoot已经做好了静态资源映射
         registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**")
-                .excludePathPatterns("/index.html","/","/community/**","/login","/webjars/**","/asserts/**");
+                .excludePathPatterns("/index.html","/","/performane/**","/login","/webjars/**","/asserts/**");
     }
 }

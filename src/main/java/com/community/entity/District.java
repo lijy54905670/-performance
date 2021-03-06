@@ -1,4 +1,4 @@
-package com.community.entity;
+package com.performane.entity;
 
 public class District {
     private Integer pid;

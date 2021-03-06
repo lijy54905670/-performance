@@ -1,10 +1,10 @@
-package com.community.controller;
+package com.performane.controller;
 
-import com.community.entity.Community;
-import com.community.entity.User;
-import com.community.service.CommunityServiceImp;
-import com.community.service.PcServiceImp;
-import com.community.service.UserServiceImp;
+import com.performane.entity.performane;
+import com.performane.entity.User;
+import com.performane.service.performaneServiceImp;
+import com.performane.service.PcServiceImp;
+import com.performane.service.UserServiceImp;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,28 +19,28 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/community")
-public class CommunityController {
+@RequestMapping("/performane")
+public class PerformaneController {
     @Autowired
-    CommunityServiceImp communityServiceImp;
+    performaneServiceImp performaneServiceImp;
     @Autowired
     PcServiceImp pcServiceImp;
     @Autowired
     UserServiceImp userServiceImp;
 
-    @RequestMapping("/communityHall/{pageNum}")
-    public String FindAllCommunityUser(Model model,@PathVariable("pageNum") Integer pageNum,HttpServletRequest request, HttpServletResponse response){
+    @RequestMapping("/performaneHall/{pageNum}")
+    public String FindAllperformaneUser(Model model,@PathVariable("pageNum") Integer pageNum,HttpServletRequest request, HttpServletResponse response){
 
         response.setContentType("text/html;charset=UTF-8");
         pcServiceImp.showProvinceList(model);
 
-        communityServiceImp.PageFindAllCommunityUser(model,pageNum);
-        return "community/communityHall";
+        performaneServiceImp.PageFindAllperformaneUser(model,pageNum);
+        return "performane/performaneHall";
     }
 
     //查看社团信息 （05-12）（05-14）
-    @GetMapping("/communityInfo{id}")
-    public String ShowCommunityInfoById(Model model, HttpServletRequest request, HttpSession session){
+    @GetMapping("/performaneInfo{id}")
+    public String ShowperformaneInfoById(Model model, HttpServletRequest request, HttpSession session){
         String str=request.getParameter("id");
         int id=Integer.parseInt(str);
         //获取当前登录用户信息
@@ -49,44 +49,44 @@ public class CommunityController {
 
         //判断该用户是否为社团成员
         //查看用户级别
-        communityServiceImp.ShowUserLevel(user.getId(),id,session,model);
+        performaneServiceImp.ShowUserLevel(user.getId(),id,session,model);
 
 
         //方便之后点击活动时传参
-        session.setAttribute("communityId",id);
-        communityServiceImp.ShowCommunityInfoById(model,id,session);
-        return "community/communityInfo";
+        session.setAttribute("performaneId",id);
+        performaneServiceImp.ShowperformaneInfoById(model,id,session);
+        return "performane/performaneInfo";
     }
 
     //查看社团成员列表（05-13）
     @GetMapping("/findUser{id}")
-    public String ShowUserListByCommunityId(Model model,HttpServletRequest request){
+    public String ShowUserListByperformaneId(Model model,HttpServletRequest request){
         String str=request.getParameter("id");
         int id=Integer.parseInt(str);
-        communityServiceImp.ShowUserListByCommunityId(model,id);
-        return "community/number";
+        performaneServiceImp.ShowUserListByperformaneId(model,id);
+        return "performane/number";
     }
 
     //通过省市学校查询社团
-    @RequestMapping("/showCommunityBySname/{pageNum}")
-    public String ShowCommunityBySchoolName(Model model,@PathVariable("pageNum") Integer pageNum,
+    @RequestMapping("/showperformaneBySname/{pageNum}")
+    public String ShowperformaneBySchoolName(Model model,@PathVariable("pageNum") Integer pageNum,
                                             HttpServletRequest request, HttpServletResponse response,
                                             HttpSession session){
         String sname= (String) session.getAttribute("schoolName");
         System.out.println(sname);
-        communityServiceImp.ShowCommunityBySchoolName(model,pageNum,sname);
-        return "community/communityHall";
+        performaneServiceImp.ShowperformaneBySchoolName(model,pageNum,sname);
+        return "performane/performaneHall";
     }
 
     //设置权限
     @PostMapping("/SetPermissions")
     public String SetPermissions(HttpServletRequest request,HttpServletResponse response,HttpSession session){
-        int communityId = (int) session.getAttribute("communityId");
+        int performaneId = (int) session.getAttribute("performaneId");
         int Uid=Integer.parseInt(request.getParameter("Uid"));
         int level=Integer.parseInt(request.getParameter("level"));
         String name=request.getParameter("name");
-        communityServiceImp.SetPermission(communityId,Uid,level,name);
-        return "redirect:/community/findUser?id="+communityId;
+        performaneServiceImp.SetPermission(performaneId,Uid,level,name);
+        return "redirect:/performane/findUser?id="+performaneId;
     }
 
     //删除社员
@@ -94,66 +94,66 @@ public class CommunityController {
     public String DeleteUser(HttpServletRequest request,HttpServletResponse response,HttpSession session){
         int Uid = Integer.parseInt(request.getParameter("Uid"));
         int Cid = Integer.parseInt(request.getParameter("Cid"));
-        communityServiceImp.DeleteUser(Cid,Uid);
-        return "redirect:/community/findUser?id="+Cid;
+        performaneServiceImp.DeleteUser(Cid,Uid);
+        return "redirect:/performane/findUser?id="+Cid;
     }
 
     //同意加入社团
     @GetMapping("/agreeJoin")
     public String agreeJoin(HttpServletRequest request,HttpServletResponse response,HttpSession session){
-        int Cid= (int) session.getAttribute("communityId");
+        int Cid= (int) session.getAttribute("performaneId");
         int Uid=Integer.parseInt(request.getParameter("Uid"));
-        communityServiceImp.AgreeJoin(Cid,Uid);
-        return "redirect:/community/findUser?id="+Cid;
+        performaneServiceImp.AgreeJoin(Cid,Uid);
+        return "redirect:/performane/findUser?id="+Cid;
     }
 
     //模糊查询社员
     @PostMapping("/fuzzySearch")
     public String FuzzySearch(Model model,HttpServletRequest request,HttpServletResponse response,HttpSession session){
-        int Cid= (int) session.getAttribute("communityId");
+        int Cid= (int) session.getAttribute("performaneId");
         String Uname=request.getParameter("Uname");
-        communityServiceImp.FindUserByCidUname(Cid,Uname,model);
-        return "community/number";
+        performaneServiceImp.FindUserByCidUname(Cid,Uname,model);
+        return "performane/number";
     }
     //社团模糊搜索
-    @PostMapping("/searchCommunity/{pageNum}")
-    public String FuzzyCommunity(Model model,@PathVariable("pageNum") Integer pageNum,HttpServletRequest request, HttpServletResponse response){
+    @PostMapping("/searchperformane/{pageNum}")
+    public String Fuzzyperformane(Model model,@PathVariable("pageNum") Integer pageNum,HttpServletRequest request, HttpServletResponse response){
 
         response.setContentType("text/html;charset=UTF-8");
         pcServiceImp.showProvinceList(model);
 
         String Cname=request.getParameter("Cname");
 
-        communityServiceImp.PageFuzzyCommunity(model,pageNum,Cname);
-        return "community/communityHall";
+        performaneServiceImp.PageFuzzyperformane(model,pageNum,Cname);
+        return "performane/performaneHall";
     }
 
     //创建社团
-    @PostMapping("/CreateCommunity")
-    public String CreateCommunity(Model model,HttpServletRequest request,HttpServletResponse response,HttpSession session){
+    @PostMapping("/Createperformane")
+    public String Createperformane(Model model,HttpServletRequest request,HttpServletResponse response,HttpSession session){
         String Uname=request.getParameter("Uname");
         User user= (User) session.getAttribute("user");
         Integer teacherId=user.getId();
         //String schoolName=user.getSchoolName();
         String schoolName=request.getParameter("schoolName");
         System.out.println(schoolName);
-        int schoolId=communityServiceImp.FindSchoolId(schoolName);
+        int schoolId=performaneServiceImp.FindSchoolId(schoolName);
 
 
-        Community community=new Community();
-        community.setUserTeacherId(teacherId);
-        community.setName(request.getParameter("Cname"));
-        community.setSchoolId(schoolId);
-        community.setSchoolName(schoolName);
+        performane performane=new performane();
+        performane.setUserTeacherId(teacherId);
+        performane.setName(request.getParameter("Cname"));
+        performane.setSchoolId(schoolId);
+        performane.setSchoolName(schoolName);
 
         //创建社团
-        communityServiceImp.CreateCommunity(community);
+        performaneServiceImp.Createperformane(performane);
         //获取新建社团id
-        int Cid=communityServiceImp.FindCommunityId(request.getParameter("Cname"));
-        int Uid=communityServiceImp.FindUserId(Uname);
+        int Cid=performaneServiceImp.FindperformaneId(request.getParameter("Cname"));
+        int Uid=performaneServiceImp.FindUserId(Uname);
 
-        communityServiceImp.InsertCommunityUser(Cid,Uid);
-        System.out.println(community.toString());
-        return "community/myCommunity";
+        performaneServiceImp.InsertperformaneUser(Cid,Uid);
+        System.out.println(performane.toString());
+        return "performane/myperformane";
     }
 }

@@ -1,8 +1,8 @@
-package com.community.pojo;
+package com.performane.pojo;
 
-public class CommunityUser {
+public class performaneUser {
     private Integer id;
-    private String communityName;
+    private String performaneName;
     //社团总人数
     private Integer personNum;
     private String schoolName;
@@ -24,12 +24,12 @@ public class CommunityUser {
         this.id = id;
     }
 
-    public String getCommunityName() {
-        return communityName;
+    public String getperformaneName() {
+        return performaneName;
     }
 
-    public void setCommunityName(String communityName) {
-        this.communityName = communityName;
+    public void setperformaneName(String performaneName) {
+        this.performaneName = performaneName;
     }
 
     public Integer getPersonNum() {
@@ -50,9 +50,9 @@ public class CommunityUser {
 
     @Override
     public String toString() {
-        return "CommunityUser{" +
+        return "performaneUser{" +
                 "id=" + id +
-                ", communityName='" + communityName + '\'' +
+                ", performaneName='" + performaneName + '\'' +
                 ", personNum=" + personNum +
                 ", schoolName='" + schoolName + '\'' +
                 ", auditStatus=" + auditStatus +

@@ -85,9 +85,9 @@
                         <h4>我管理的社团</h4>
                         <div class="pre-scrollable" style="height:50%;">
                         <ul class="list-group">
-                            <!--/*@thymesVar id="joinedCommunity" type=""*/-->
-                            <li class="list-group-item " th:if="${not #strings.isEmpty(comList.numberLevel) && comList.numberLevel<3}" th:each="comList : ${joinedCommunity}">
-                                <a href="#" th:href="@{/community/communityInfo(id=${comList.communityId})}" style="color: black !important;">[[${comList.communityName}]]  ([[${comList.levelName}]])</a>
+                            <!--/*@thymesVar id="joinedperformane" type=""*/-->
+                            <li class="list-group-item " th:if="${not #strings.isEmpty(comList.numberLevel) && comList.numberLevel<3}" th:each="comList : ${joinedperformane}">
+                                <a href="#" th:href="@{/performane/performaneInfo(id=${comList.performaneId})}" style="color: black !important;">[[${comList.performaneName}]]  ([[${comList.levelName}]])</a>
                             </li>
 
                         </ul>
@@ -98,9 +98,9 @@
                         <h4>我加入的社团</h4>
                         <div class="pre-scrollable" style="height:50%">
                         <ul class="list-group">
-                            <!--/*@thymesVar id="joinedCommunity" type=""*/-->
-                            <li class="list-group-item " th:if="${not #strings.isEmpty(comList.numberLevel) && comList.numberLevel==3}" th:each="comList : ${joinedCommunity}">
-                                <a href="#" th:href="@{/community/communityInfo(id=${comList.communityId})}" style="color: black !important;">[[${comList.communityName}]]  ([[${comList.levelName}]])</a>
+                            <!--/*@thymesVar id="joinedperformane" type=""*/-->
+                            <li class="list-group-item " th:if="${not #strings.isEmpty(comList.numberLevel) && comList.numberLevel==3}" th:each="comList : ${joinedperformane}">
+                                <a href="#" th:href="@{/performane/performaneInfo(id=${comList.performaneId})}" style="color: black !important;">[[${comList.performaneName}]]  ([[${comList.levelName}]])</a>
                             </li>
                         </ul>
                         </div>
@@ -109,9 +109,9 @@
                         <h4>待审核</h4>
                         <div class="pre-scrollable" style="height:50%">
                             <ul class="list-group">
-                                <!--/*@thymesVar id="joinedCommunity" type=""*/-->
-                                <li class="list-group-item " th:if="${comList.auditStatus==0}" th:each="comList : ${joinedCommunity}">
-                                    <a href="#" th:href="@{/community/communityInfo(id=${comList.communityId})}" style="color: black !important;">[[${comList.communityName}]]  (待审核)</a>
+                                <!--/*@thymesVar id="joinedperformane" type=""*/-->
+                                <li class="list-group-item " th:if="${comList.auditStatus==0}" th:each="comList : ${joinedperformane}">
+                                    <a href="#" th:href="@{/performane/performaneInfo(id=${comList.performaneId})}" style="color: black !important;">[[${comList.performaneName}]]  (待审核)</a>
                                 </li>
                             </ul>
                         </div>
@@ -123,7 +123,7 @@
         <!--创建社团-->
         <div class="modal" tabindex="-1" role="dialog" id="create" style="display: none;margin-top: 10%">
             <div class="modal-dialog" role="document">
-                <form th:action="@{/community/CreateCommunity}" method="post">
+                <form th:action="@{/performane/Createperformane}" method="post">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">创建社团</h5>

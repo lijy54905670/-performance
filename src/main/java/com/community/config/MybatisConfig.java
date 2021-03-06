@@ -1,4 +1,4 @@
-package com.community.config;
+package com.performane.config;
 
 import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
 import org.springframework.context.annotation.Bean;

@@ -1,21 +1,21 @@
-package com.community.service.serviceInterface;
+package com.performane.service.serviceInterface;
 
-import com.community.entity.Community;
+import com.performane.entity.performane;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpSession;
 
-public interface CommunityService {
+public interface performaneService {
     //社团大厅分页
-    public void PageFindAllCommunityUser(Model model, Integer pageNum);
+    public void PageFindAllperformaneUser(Model model, Integer pageNum);
     //查看社团
-    public void ShowCommunityInfoById(Model model, Integer id, HttpSession session);
+    public void ShowperformaneInfoById(Model model, Integer id, HttpSession session);
 
     //查看社团成员 (05-13)
-    public void ShowUserListByCommunityId(Model model, Integer id);
+    public void ShowUserListByperformaneId(Model model, Integer id);
 
     //通过学校名查看社团
-    public void ShowCommunityBySchoolName(Model model,Integer pageNum,String Sname);
+    public void ShowperformaneBySchoolName(Model model,Integer pageNum,String Sname);
 
     //查看用户级别
     public void ShowUserLevel(Integer Uname,Integer Cid,HttpSession session,Model model);
@@ -33,21 +33,21 @@ public interface CommunityService {
     public void FindUserByCidUname(Integer Cid,String Uname,Model model);
 
     //模糊查询社团
-    public void PageFuzzyCommunity(Model model, Integer pageNum,String Cname);
+    public void PageFuzzyperformane(Model model, Integer pageNum,String Cname);
 
     //根据学校名查找学校id
     public int FindSchoolId(String schoolName);
 
     //创建社团
-    public void CreateCommunity(Community community);
+    public void Createperformane(performane performane);
 
     //根据社团名查找社团id
-    public int FindCommunityId(String Cname);
+    public int FindperformaneId(String Cname);
 
     //根据用户名查找用户id
     public int FindUserId(String Uname);
 
     //插入社长
-    public void InsertCommunityUser(Integer Cid,Integer Uid);
+    public void InsertperformaneUser(Integer Cid,Integer Uid);
 
 }

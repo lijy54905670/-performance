@@ -1,12 +1,12 @@
-package com.community.service;
+package com.performane.service;
 
-import com.community.entity.Community;
-import com.community.entity.User;
-import com.community.mapper.CommunityMapper;
-import com.community.pojo.CommunityUser;
-import com.community.pojo.CommunityUserInfo;
-import com.community.pojo.PostIsRecommend;
-import com.community.service.serviceInterface.CommunityService;
+import com.performane.entity.performane;
+import com.performane.entity.User;
+import com.performane.mapper.performaneMapper;
+import com.performane.pojo.performaneUser;
+import com.performane.pojo.performaneUserInfo;
+import com.performane.pojo.PostIsRecommend;
+import com.performane.service.serviceInterface.performaneService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,32 +22,32 @@ import java.util.List;
 
 @Transactional
 @Service
-public class CommunityServiceImp implements CommunityService {
+public class performaneServiceImp implements performaneService {
     @Autowired
-    private CommunityMapper communityMapper;
+    private performaneMapper performaneMapper;
     @Override
     //社团大厅分页
-    public void PageFindAllCommunityUser(Model model,Integer pageNum) {
+    public void PageFindAllperformaneUser(Model model,Integer pageNum) {
         if (pageNum==null){
             pageNum=1;
         }
 
         //计算最大页数
-        List<CommunityUser> communityUserList = communityMapper.FindAllCommunityUser();
-        int total = communityUserList.size();
+        List<performaneUser> performaneUserList = performaneMapper.FindAllperformaneUser();
+        int total = performaneUserList.size();
         int maxPage = (total%8)>0?((total/8)+1):(total/8);
         model.addAttribute("maxPage",maxPage);
 
 
         PageHelper.startPage(pageNum,8);
-        Page<CommunityUser> communityUserLists=communityMapper.PageFindAllCommunityUser();
+        Page<performaneUser> performaneUserLists=performaneMapper.PageFindAllperformaneUser();
 
-        Iterator<CommunityUser> iterator =communityUserLists.iterator();
+        Iterator<performaneUser> iterator =performaneUserLists.iterator();
         while(iterator.hasNext()){
             System.out.println(iterator.next().toString());
         }
 
-        model.addAttribute("communityUserLists",communityUserLists);
+        model.addAttribute("performaneUserLists",performaneUserLists);
         model.addAttribute("pageNum",pageNum);
 
     }
@@ -55,19 +55,19 @@ public class CommunityServiceImp implements CommunityService {
 
     //查看社团
     @Override
-    public void ShowCommunityInfoById(Model model, Integer id,HttpSession session) {
+    public void ShowperformaneInfoById(Model model, Integer id,HttpSession session) {
         User user = (User) session.getAttribute("user");
         Integer userId = user.getId();
         //获取社团信息
-        Community community=communityMapper.FindCommunityInfoById(id);
+        performane performane=performaneMapper.FindperformaneInfoById(id);
         //查看当前用户是否属于社团
-        CommunityUser communityUser = communityMapper.FindNumberByUserId(id,userId);
-        if (communityUser==null){
+        performaneUser performaneUser = performaneMapper.FindNumberByUserId(id,userId);
+        if (performaneUser==null){
             //不属于当前社团
             //查看当前用户学校和社团学校是否一致
             String userSchool = user.getSchoolName();
-            String communitySchool = community.getSchoolName();
-            if ((userSchool!=null)&&userSchool.equals(communitySchool)){
+            String performaneSchool = performane.getSchoolName();
+            if ((userSchool!=null)&&userSchool.equals(performaneSchool)){
                 model.addAttribute("isSchool",true);
             }else {
                 model.addAttribute("isSchool",false);
@@ -75,7 +75,7 @@ public class CommunityServiceImp implements CommunityService {
             model.addAttribute("isJoin",false);
         }else {
             //存在的情况下判断是待审核还是已经是社团成员
-            if (communityUser.getAuditStatus()==0){
+            if (performaneUser.getAuditStatus()==0){
                 model.addAttribute("isAudit",true);
                 model.addAttribute("isJoin",false);
             }else {
@@ -86,13 +86,13 @@ public class CommunityServiceImp implements CommunityService {
 
 
 
-        if(community!=null){
-            session.setAttribute("communityName",community.getName());
-            model.addAttribute("communityInfo",community);
+        if(performane!=null){
+            session.setAttribute("performaneName",performane.getName());
+            model.addAttribute("performaneInfo",performane);
         }
 
         //精品贴（0512）
-        List<PostIsRecommend> postIsRecommends=communityMapper.FindPostIsRecommendById(id);
+        List<PostIsRecommend> postIsRecommends=performaneMapper.FindPostIsRecommendById(id);
         if(!postIsRecommends.isEmpty()){
             model.addAttribute("postIsRecommend",postIsRecommends);
         }
@@ -100,11 +100,11 @@ public class CommunityServiceImp implements CommunityService {
 
     //查看社团成员（05-13）
     @Override
-    public void ShowUserListByCommunityId(Model model, Integer id) {
+    public void ShowUserListByperformaneId(Model model, Integer id) {
         //已加入成员
-        List<CommunityUserInfo> userList = communityMapper.FindUserByCommunityId(id);
+        List<performaneUserInfo> userList = performaneMapper.FindUserByperformaneId(id);
         //待审核成员
-        List<User> auditUserList = communityMapper.FindAuditUserByCommunityId(id);
+        List<User> auditUserList = performaneMapper.FindAuditUserByperformaneId(id);
         if(!userList.isEmpty()){
             model.addAttribute("userList",userList);
             model.addAttribute("auditUserList",auditUserList);
@@ -118,32 +118,32 @@ public class CommunityServiceImp implements CommunityService {
 
     // 同省市县查询社团
     @Override
-    public void ShowCommunityBySchoolName(Model model,Integer pageNum, String Sname) {
+    public void ShowperformaneBySchoolName(Model model,Integer pageNum, String Sname) {
         if (pageNum==null){
             pageNum=1;
         }
 
         //计算最大页数
-        List<CommunityUser> communityUserList = communityMapper.FindAllCommunityUser();
-        int total = communityUserList.size();
+        List<performaneUser> performaneUserList = performaneMapper.FindAllperformaneUser();
+        int total = performaneUserList.size();
         int maxPage = (total%8)>0?((total/8)+1):(total/8);
         model.addAttribute("maxPage",maxPage);
 
         PageHelper.startPage(pageNum,8);
-        Page<CommunityUser> communityUserLists=communityMapper.FindCommunityBySchoolName(Sname);
+        Page<performaneUser> performaneUserLists=performaneMapper.FindperformaneBySchoolName(Sname);
         System.out.println("通过学校名查询使用的学校名"+Sname);
-        Iterator<CommunityUser> iterator =communityUserLists.iterator();
+        Iterator<performaneUser> iterator =performaneUserLists.iterator();
         while(iterator.hasNext()){
             System.out.println(iterator.next().toString());
         }
-        model.addAttribute("communityUserLists",communityUserLists);
+        model.addAttribute("performaneUserLists",performaneUserLists);
         model.addAttribute("pageNum",pageNum);
     }
 
     //判断是否为社团成员 查看成员等级
     @Override
     public void ShowUserLevel(Integer Uname, Integer Cid,HttpSession session,Model model) {
-        String Str = communityMapper.FindUserLevel(Uname, Cid);
+        String Str = performaneMapper.FindUserLevel(Uname, Cid);
         int level =4;
         boolean isMember = false;
         if (Str != null) {
@@ -169,7 +169,7 @@ public class CommunityServiceImp implements CommunityService {
                 name="社员";
             }
         }
-        int i=communityMapper.UpdatePer(Cid,Uid,level,name);
+        int i=performaneMapper.UpdatePer(Cid,Uid,level,name);
         if(i>0){
             System.out.println("权限设置成功");
         }
@@ -177,7 +177,7 @@ public class CommunityServiceImp implements CommunityService {
 
     @Override
     public void DeleteUser(Integer Cid, Integer Uid) {
-        int i=communityMapper.DeleteUser(Cid,Uid);
+        int i=performaneMapper.DeleteUser(Cid,Uid);
         if(i>0){
             System.out.println("删除成功");
         }else {
@@ -187,7 +187,7 @@ public class CommunityServiceImp implements CommunityService {
 
     @Override
     public void AgreeJoin(Integer Cid, Integer Uid) {
-        int i=communityMapper.UpdateStatus(Cid,Uid);
+        int i=performaneMapper.UpdateStatus(Cid,Uid);
         if(i>0){
             System.out.println("加入成功");
         }else {
@@ -197,12 +197,12 @@ public class CommunityServiceImp implements CommunityService {
 
     @Override
     public void FindUserByCidUname(Integer Cid, String Uname, Model model) {
-        List<CommunityUserInfo> communityUserInfos=communityMapper.SelectUserByCidUname(Cid,Uname);
-        if(!communityUserInfos.isEmpty()){
-            model.addAttribute("searchUserList",communityUserInfos);
+        List<performaneUserInfo> performaneUserInfos=performaneMapper.SelectUserByCidUname(Cid,Uname);
+        if(!performaneUserInfos.isEmpty()){
+            model.addAttribute("searchUserList",performaneUserInfos);
             model.addAttribute("flag",1);
 
-            Iterator<CommunityUserInfo> iterator=communityUserInfos.iterator();
+            Iterator<performaneUserInfo> iterator=performaneUserInfos.iterator();
             while(iterator.hasNext()){
                 System.out.println(iterator.next().toString());
             }
@@ -210,33 +210,33 @@ public class CommunityServiceImp implements CommunityService {
     }
 
     @Override
-    public void PageFuzzyCommunity(Model model, Integer pageNum,String Cname) {
+    public void PageFuzzyperformane(Model model, Integer pageNum,String Cname) {
         if (pageNum==null){
             pageNum=1;
         }
 
         //计算最大页数
-        List<CommunityUser> communityUserList = communityMapper.FindAllCommunityUser();
-        int total = communityUserList.size();
+        List<performaneUser> performaneUserList = performaneMapper.FindAllperformaneUser();
+        int total = performaneUserList.size();
         int maxPage = (total%8)>0?((total/8)+1):(total/8);
         model.addAttribute("maxPage",maxPage);
 
         PageHelper.startPage(pageNum,8);
-        Page<CommunityUser> communityUserLists=communityMapper.PageFuzzyCommunity(Cname);
+        Page<performaneUser> performaneUserLists=performaneMapper.PageFuzzyperformane(Cname);
 
-        Iterator<CommunityUser> iterator =communityUserLists.iterator();
+        Iterator<performaneUser> iterator =performaneUserLists.iterator();
         while(iterator.hasNext()){
             System.out.println(iterator.next().toString());
         }
-        model.addAttribute("communityUserLists",communityUserLists);
+        model.addAttribute("performaneUserLists",performaneUserLists);
         model.addAttribute("pageNum",pageNum);
     }
 
     @Override
     public int FindSchoolId(String schoolName) {
-        String str=communityMapper.SelectSchoolId(schoolName);
+        String str=performaneMapper.SelectSchoolId(schoolName);
         if(str!=null) {
-            int schoolId = Integer.parseInt(communityMapper.SelectSchoolId(schoolName));
+            int schoolId = Integer.parseInt(performaneMapper.SelectSchoolId(schoolName));
             return schoolId;
         }else{
             return 0;
@@ -244,8 +244,8 @@ public class CommunityServiceImp implements CommunityService {
     }
 
     @Override
-    public void CreateCommunity(Community community) {
-        int i=communityMapper.insertCommunity(community);
+    public void Createperformane(performane performane) {
+        int i=performaneMapper.insertperformane(performane);
         if(i>0){
             System.out.println("创建成功");
         }else {
@@ -254,8 +254,8 @@ public class CommunityServiceImp implements CommunityService {
     }
 
     @Override
-    public int FindCommunityId(String Cname) {
-        String str=communityMapper.SelectCommunityId(Cname);
+    public int FindperformaneId(String Cname) {
+        String str=performaneMapper.SelectperformaneId(Cname);
         if(str!=null){
             int Cid=Integer.parseInt(str);
             return Cid;
@@ -266,7 +266,7 @@ public class CommunityServiceImp implements CommunityService {
 
     @Override
     public int FindUserId(String Uname) {
-        String str=communityMapper.SelectUserId(Uname);
+        String str=performaneMapper.SelectUserId(Uname);
         if(str!=null){
             int Uid=Integer.parseInt(str);
             return Uid;
@@ -276,8 +276,8 @@ public class CommunityServiceImp implements CommunityService {
     }
 
     @Override
-    public void InsertCommunityUser(Integer Cid, Integer Uid) {
-        int i=communityMapper.InsertCommunityUser(Cid,Uid);
+    public void InsertperformaneUser(Integer Cid, Integer Uid) {
+        int i=performaneMapper.InsertperformaneUser(Cid,Uid);
         if(i>0){
             System.out.println("插入成功");
         }else{

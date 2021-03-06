@@ -1,7 +1,7 @@
-package com.community.mapper;
+package com.performane.mapper;
 
-import com.community.entity.User;
-import com.community.pojo.UserJoinedCommunity;
+import com.performane.entity.User;
+import com.performane.pojo.UserJoinedperformane;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -21,12 +21,12 @@ public interface UserMapper {
     public int UpdateUser(User user);
 
     //用户加入社团,状态待审核
-    @Insert("insert into community_user (community_id,user_number_id,audit_status) values(#{communityId},#{userId},0)")
-    public int InsertCommunityUser(@Param("communityId") Integer communityId,@Param("userId") Integer userId);
+    @Insert("insert into performane_user (performane_id,user_number_id,audit_status) values(#{performaneId},#{userId},0)")
+    public int InsertperformaneUser(@Param("performaneId") Integer performaneId,@Param("userId") Integer userId);
 
     //查找用户加入的社团信息
-    @Select("select community_id,number_level,`name` as communityName,level_name,audit_status from community_user \n"+
-            "as cu,community as c where cu.community_id=c.id and user_number_id=#{Uid}")
-    public List<UserJoinedCommunity> findJoinedCommunity(Integer Uid);
+    @Select("select performane_id,number_level,`name` as performaneName,level_name,audit_status from performane_user \n"+
+            "as cu,performane as c where cu.performane_id=c.id and user_number_id=#{Uid}")
+    public List<UserJoinedperformane> findJoinedperformane(Integer Uid);
 
 }

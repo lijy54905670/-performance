@@ -1,9 +1,9 @@
-package com.community.service;
+package com.performane.service;
 
-import com.community.entity.Activity;
-import com.community.mapper.ActivityMapper;
-import com.community.pojo.ActivityUser;
-import com.community.service.serviceInterface.ActivityService;
+import com.performane.entity.Activity;
+import com.performane.mapper.ActivityMapper;
+import com.performane.pojo.ActivityUser;
+import com.performane.service.serviceInterface.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +20,7 @@ public class ActivityServiceImp implements ActivityService {
     private ActivityMapper activityMapper;
     @Override
     public void ShowActivityInfo(Model model, Integer id) {
-        List<Activity> activities = activityMapper.FindActivityInfoByCommunityId(id);
+        List<Activity> activities = activityMapper.FindActivityInfoByperformaneId(id);
         if(!activities.isEmpty()){
             model.addAttribute("activities",activities);
 
@@ -34,7 +34,7 @@ public class ActivityServiceImp implements ActivityService {
     //查看历史活动
     @Override
     public void ShowHistoryActivityInfo(Model model, Integer id) {
-        List<Activity> activities = activityMapper.FindHistoryActivityInfoByCommunityId(id);
+        List<Activity> activities = activityMapper.FindHistoryActivityInfoByperformaneId(id);
         if(!activities.isEmpty()){
             model.addAttribute("historyActivity",activities);
 
